@@ -3,7 +3,10 @@ package com.capgemini.orders.entity;
 import java.util.Objects;
 
 public class Item {
-	
+	private int itemId;
+	private int itemQuantity;
+	private int itemProductId;
+	private double itemTotal;
 	@Override
 	public int hashCode() {
 		return Objects.hash(itemId);
@@ -27,10 +30,7 @@ public class Item {
 			return false;
 		return true;
 	}
-	private int itemId;
-	private int itemQuantity;
-	private int itemProductId;
-	private double itemTotal;
+	
 	public Item() {
 		super();
 		// TODO Auto-generated constructor stub

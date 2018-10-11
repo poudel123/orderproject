@@ -21,26 +21,42 @@ class OrderServiceImpl implements OrderService {
 	
 
 	@Override
-	public void updateOrder(Orders orders) {
-		ordersRepository.save(orders);
+	public Orders updateOrder(Orders orders) {
+		return ordersRepository.save(orders);
 
 	}
 
 	@Override
-	public void deleteOrderById(int orderId) {
-		ordersRepository.deleteById(orderId);
+	public Orders deleteOrderById(int orderId) {
+		Optional<Orders> optionalOrder = ordersRepository.findById(orderId);
+		 if(optionalOrder.isPresent())
+		 {
+			 Orders orders =optionalOrder.get();
+			 orders.setStatus("DELETED");
+			 ordersRepository.save(orders);
+			 return orders;
+		 }
+		return null;
 
 	}
 
 	@Override
-	public void cancelOrder(int orderId) {
+	public Orders cancelOrder(int orderId) {
+		Optional<Orders> optionalOrders = ordersRepository.findById(orderId);
+		if(optionalOrders.isPresent())
+		{
+			Orders orders = optionalOrders.get();
+			orders.setStatus("CANCLLED");
+			ordersRepository.save(orders);
+			return orders;
+		}
+		return null;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public List<Orders> getOrders() {
-		// TODO Auto-generated method stub
 		return ordersRepository.findAll();
 	}
 
@@ -70,5 +86,17 @@ class OrderServiceImpl implements OrderService {
 		orders.setOrderDate(LocalDate.now());
 	return	ordersRepository.save(orders);
 	}
+
+	@Override
+	public Orders changeStatus(int orderId, String status) {
+		Optional<Orders> optional = ordersRepository.findById(orderId);
+		if (optional.isPresent()) {
+			optional.get().setStatus(status);
+			return  ordersRepository.save(optional.get());
+		}
+		return null;
+	}
+
+	
 
 }

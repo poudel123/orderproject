@@ -6,8 +6,7 @@ import org.springframework.data.annotation.Id;
 
 
 public class Customer {
-	
-	@Id
+
 	private int customerId;
 	private String customerPassword;
 	private String firstName;
